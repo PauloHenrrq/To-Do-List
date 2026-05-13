@@ -1,37 +1,61 @@
 # 📝 LOGS - ToDoList
 
-### [2026-05-12] - Fase 2: Início da Validação e Ajustes de Segurança
-- **Segurança:** Substituição do `bcrypt` por `bcryptjs` para garantir compatibilidade máxima com o runtime do Next.js e ambientes serverless.
-- **Estrutura:** Criado `src/lib/prisma.ts` para gerenciar a instância única do Prisma Client.
-- **Validação:** Iniciada a centralização de regras de negócio no `src/lib/zod.ts`.
-- **Status:** Infraestrutura pronta, iniciando lógica de autenticação.
-- **Entregas:**
-    - Definição da stack (Next.js, Prisma, Neon, NextAuth, Zod, Bun).
-    - Criação do [task.md](file:///c:/Users/paulo/workspace/projetos/ToDoList/task.md) e [WORKSPACE.md](file:///c:/Users/paulo/workspace/projetos/ToDoList/WORKSPACE.md).
-
-## [2026-05-12] - Inicialização e Remodelação
-- **Status:** Planejamento Concluído / Início da Execução.
-- **Ação:** Decisão técnica de remodelar o projeto do zero para uma estrutura unificada (Monólito Next.js).
-- **Entregas:**
-    - Definição da stack (Next.js, Prisma, Neon, NextAuth, Zod, Bun).
-    - Criação do [task.md](file:///c:/Users/paulo/workspace/projetos/ToDoList/task.md) e [WORKSPACE.md](file:///c:/Users/paulo/workspace/projetos/ToDoList/WORKSPACE.md).
-
-## [2026-05-12] - Unificação e Setup de Infra
+## [2026-05-12] - Sincronização de Schema e Refinamento de Status
 - **Status:** Concluído.
-- **Ação:** Configuração da raiz do projeto, instalação de dependências e banco de dados.
+- **Ação:** Atualização de 'completed' (boolean) para 'status' (string) e sincronização total.
 - **Entregas:**
-    - `.gitignore` atualizado para estrutura unificada.
-    - Instalação do Prisma 7 e dependências via Bun.
-    - Modelagem completa do `schema.prisma` (NextAuth + Tasks).
-    - Migration inicial aplicada com sucesso no Neon.
-- **Próximo Passo:** Iniciar a Fase 2: Configuração do NextAuth.js e Schemas de Validação Zod.
+    - `prisma/schema.prisma` atualizado para `status String @default("Pendente")`.
+    - `src/schemas/task.schema.ts` e rotas de API sincronizadas.
+    - Suíte de testes atualizada para validar `status` (14/14 tests pass).
 
-## [2026-05-12] - Pivot Arquitetural: JWT Strategy
-- **Status:** Em Andamento.
-- **Ação:** Simplificação do Schema do Prisma e decisão pelo uso de sessões JWT no NextAuth.
+## [2026-05-12] - Conclusão da Issue #4 (Testes Automatizados)
+- **Status:** Concluído.
+- **Ações:**
+    - Estabilização do ambiente de testes com Bun.
+    - Implementação de mocks locais para `next-auth` e `prisma` para evitar erros de injeção em imports dinâmicos.
+    - Criação de suíte de testes unitários para schemas Zod (100% pass).
+    - Criação de suíte de testes de integração para API de tarefas (CRUD completo e autorização).
+- **Resultado:** 14/14 testes passando. Backend validado e resiliente.
+- **Aprendizado:** No Bun, mocks de módulos funcionam de forma mais confiável quando definidos diretamente no arquivo de teste antes dos imports dinâmicos da lógica de API.
+
+## [2026-05-12] - Implementação de CRUD e Refatoração SOLID (Issue #3)
+- **Status:** Concluído.
+- **Ação:** Finalização da lógica de backend para tarefas e modularização de Schemas.
 - **Entregas:**
-    - Schema do Prisma reduzido para apenas `User` e `Task`.
-    - Migração para remoção das tabelas de suporte do NextAuth.
-    - Decisão de utilizar `CredentialsProvider` com hashing de senha manual.
-- **Próximo Passo:** Configurar `auth.ts` e implementar o hash de senha com `bcryptjs`.
-- **Próximo Passo:** O usuário irá realizar o setup inicial do Next.js na raiz do projeto.
+    - Estrutura modular em `src/schemas/` (SRP aplicada a validações).
+    - Endpoints `GET`, `POST`, `PATCH` e `DELETE` em `/api/tasks` e `/api/tasks/[id]`.
+    - Isolamento de dados garantido via `session.user.id` e `getServerSession`.
+    - Validação robusta de payloads com Zod em todas as rotas.
+    - Limpeza de arquivos legados (`src/lib/zod.ts`).
+
+## [2026-05-12] - Autenticação e Segurança (Issues #1 e #2)
+- **Status:** Concluído.
+- **Ação:** Implementação do fluxo completo de autenticação e o "Gatekeeper" de rotas.
+- **Entregas:**
+    - Configuração do `authOptions` em `src/lib/auth.ts` (JWT Strategy + Credentials Provider).
+    - Implementação do Route Handler em `app/api/auth/[...nextauth]/route.ts`.
+    - Middleware configurado para proteção global e redirecionamento para `/login`.
+    - Extensão dos tipos da sessão (Module Augmentation) para incluir `userId`.
+
+## [2026-05-12] - Refinamento de Infraestrutura (Fase 2)
+- **Status:** Concluído.
+- **Ação:** Ajustes técnicos para garantir estabilidade e performance.
+- **Entregas:**
+    - Substituição do `bcrypt` por `bcryptjs` (melhor suporte em ambientes serverless/Vercel).
+    - Criação do Singleton do Prisma em `src/lib/prisma.ts` para evitar excesso de conexões.
+    - Centralização dos Schemas de validação no `src/lib/zod.ts`.
+
+## [2026-05-12] - Unificação e Setup de Banco de Dados
+- **Status:** Concluído.
+- **Ação:** Configuração da estrutura unificada do projeto e persistência.
+- **Entregas:**
+    - Inicialização do Next.js unificado na raiz.
+    - Modelagem do `schema.prisma` simplificada para `User` e `Task`.
+    - Execução da migração inicial no Neon (PostgreSQL).
+
+## [2026-05-12] - Planejamento e Pivot Arquitetural
+- **Status:** Concluído.
+- **Ação:** Decisão de migrar para Monólito Next.js e uso de JWT para sessões.
+- **Entregas:**
+    - Criação do [task.md](file:///c:/Users/paulo/workspace/projetos/ToDoList/task.md) e [WORKSPACE.md](file:///c:/Users/paulo/workspace/projetos/ToDoList/WORKSPACE.md).
+    - Escolha estratégica do Bun como runtime e gerenciador de pacotes.
