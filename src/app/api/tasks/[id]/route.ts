@@ -8,10 +8,36 @@ interface RouteParams {
   params: Promise<{ id: string }>;
 }
 
-/**
- * PATCH /api/tasks/[id]
- * Atualiza uma tarefa existente.
- */
+export async function GET(_req: Request, { params }: RouteParams) {
+  const session = await getServerSession(authOptions);
+  const { id } = await params;
+
+  if (!session || !session.user?.id) {
+    return NextResponse.json({ error: "Não autorizado" }, { status: 401 });
+  }
+
+  try {
+    const task = await prisma.task.findUnique({
+      where: { id, userId: session.user.id },
+    });
+
+    if (!task) {
+      return NextResponse.json(
+        { error: "Tarefa não encontrada" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(task);
+  } catch (error) {
+    console.error("[TASK_GET_ID]", error);
+    return NextResponse.json(
+      { error: "Erro ao buscar tarefa" },
+      { status: 500 }
+    );
+  }
+}
+
 export async function PATCH(req: Request, { params }: RouteParams) {
   const session = await getServerSession(authOptions);
   const { id } = await params;
@@ -57,10 +83,6 @@ export async function PATCH(req: Request, { params }: RouteParams) {
   }
 }
 
-/**
- * DELETE /api/tasks/[id]
- * Remove uma tarefa existente.
- */
 export async function DELETE(_req: Request, { params }: RouteParams) {
   const session = await getServerSession(authOptions);
   const { id } = await params;

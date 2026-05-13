@@ -10,6 +10,7 @@ export const createTaskSchema = z.object({
     .max(500, "A descrição deve ter no máximo 500 caracteres.")
     .optional()
     .nullable(),
+  status: z.string().default("Pendente"),
 });
 
 export const updateTaskSchema = z.object({

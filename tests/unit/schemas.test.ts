@@ -38,7 +38,7 @@ describe("Unit Tests: Zod Schemas", () => {
 
   describe("Task Schemas", () => {
     it("deve validar criação de tarefa correta", () => {
-      const data = { title: "Minha Tarefa", description: "Descrição opcional" };
+      const data = { title: "Minha Tarefa", description: "Descrição opcional", status: "Pendente" };
       const result = createTaskSchema.safeParse(data);
       expect(result.success).toBe(true);
     });

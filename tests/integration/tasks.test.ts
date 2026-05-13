@@ -40,7 +40,8 @@ describe("Integration Tests: Tasks API", () => {
     (getServerSession as any).mockResolvedValue({ user: { id: "user_123" } });
     (prisma.task.findMany as any).mockResolvedValue([{ id: "1", title: "Task Teste" }]);
 
-    const response = await GET();
+    const req = new Request("http://localhost/api/tasks");
+    const response = await GET(req);
     const data = await response.json();
 
     expect(response.status).toBe(200);
@@ -59,7 +60,11 @@ describe("Integration Tests: Tasks API", () => {
 
     const req = new Request("http://localhost/api/tasks", {
       method: "POST",
-      body: JSON.stringify({ title: "Nova Tarefa", description: "Teste" }),
+      body: JSON.stringify({ 
+        title: "Nova Tarefa", 
+        description: "Teste",
+        status: "Pendente" 
+      }),
     });
 
     const response = await POST(req);
@@ -75,7 +80,8 @@ describe("Integration Tests: Tasks API", () => {
 
     (getServerSession as any).mockResolvedValue(null);
 
-    const response = await GET();
+    const req = new Request("http://localhost/api/tasks");
+    const response = await GET(req);
     expect(response.status).toBe(401);
   });
 
@@ -87,10 +93,32 @@ describe("Integration Tests: Tasks API", () => {
     (getServerSession as any).mockResolvedValue({ user: { id: "user_empty" } });
     (prisma.task.findMany as any).mockResolvedValue([]); // Simula lista vazia
 
-    const response = await GET();
+    const req = new Request("http://localhost/api/tasks");
+    const response = await GET(req);
     const data = await response.json();
 
     expect(response.status).toBe(200);
     expect(data).toEqual([]);
+  });
+
+  it("deve filtrar tarefas por status via query params", async () => {
+    const { getServerSession } = await import("next-auth");
+    const { GET } = await import("@/app/api/tasks/route");
+    const { prisma } = await import("@/lib/prisma");
+
+    (getServerSession as any).mockResolvedValue({ user: { id: "user_123" } });
+    
+    // Mock do findMany para ser chamado com o filtro correto
+    (prisma.task.findMany as any).mockResolvedValue([{ id: "1", title: "Task Concluída", status: "Concluído" }]);
+
+    const req = new Request("http://localhost/api/tasks?status=Concluído");
+    const response = await GET(req);
+    const data = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(data[0].status).toBe("Concluído");
+    expect(prisma.task.findMany).toHaveBeenCalledWith(expect.objectContaining({
+      where: expect.objectContaining({ status: "Concluído" })
+    }));
   });
 });

@@ -4,11 +4,7 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { createTaskSchema } from "@/schemas";
 
-/**
- * GET /api/tasks
- * Retorna todas as tarefas do usuário autenticado.
- */
-export async function GET() {
+export async function GET(req: Request) {
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user?.id) {
@@ -16,8 +12,14 @@ export async function GET() {
   }
 
   try {
+    const { searchParams } = new URL(req.url);
+    const statusFilter = searchParams.get("status");
+
     const tasks = await prisma.task.findMany({
-      where: { userId: session.user.id },
+      where: { 
+        userId: session.user.id,
+        ...(statusFilter ? { status: statusFilter } : {}),
+      },
       orderBy: { createdAt: "desc" },
     });
 
@@ -35,10 +37,6 @@ export async function GET() {
   }
 }
 
-/**
- * POST /api/tasks
- * Cria uma nova tarefa vinculada ao usuário autenticado.
- */
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
 
@@ -61,6 +59,7 @@ export async function POST(req: Request) {
       data: {
         title: result.data.title,
         description: result.data.description,
+        status: result.data.status,
         userId: session.user.id,
       },
     });

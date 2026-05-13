@@ -1,5 +1,16 @@
 # 📝 LOGS - ToDoList
 
+## [2026-05-13] - Conclusão do Backend e Readiness para Frontend
+- **Status:** 100% Concluído.
+- **Ações:** Implementação de endpoints finais, filtros e validação estrita.
+- **Entregas:**
+    - GET `/api/tasks/[id]` para busca específica por ID.
+    - Filtros por `status` implementados no GET de listagem.
+    - Validação estrita de `status` obrigatório no POST.
+    - Suíte de testes expandida e validada (17/17 tests pass).
+- **Próximos Passos:** Inicialização do Frontend (Issue #5).
+
+
 ## [2026-05-12] - Sincronização de Schema e Refinamento de Status
 - **Status:** Concluído.
 - **Ação:** Atualização de 'completed' (boolean) para 'status' (string) e sincronização total.

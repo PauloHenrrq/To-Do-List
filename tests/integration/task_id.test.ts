@@ -32,6 +32,32 @@ mock.module("@/lib/prisma", () => ({
 }));
 
 describe("Integration Tests: Tasks [ID] API", () => {
+  it("deve buscar uma tarefa específica por ID (GET)", async () => {
+    const { getServerSession } = await import("next-auth");
+    const { GET } = await import("@/app/api/tasks/[id]/route");
+    const { prisma } = await import("@/lib/prisma");
+
+    const mockUserId = "user_123";
+    const mockTaskId = "task_456";
+
+    (getServerSession as any).mockResolvedValue({ user: { id: mockUserId } });
+    
+    (prisma.task.findUnique as any).mockResolvedValue({
+      id: mockTaskId,
+      userId: mockUserId,
+      title: "Tarefa Teste",
+      status: "Pendente"
+    });
+
+    const req = new Request(`http://localhost/api/tasks/${mockTaskId}`);
+    const response = await GET(req, { params: Promise.resolve({ id: mockTaskId }) });
+    const data = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(data.id).toBe(mockTaskId);
+    expect(data.title).toBe("Tarefa Teste");
+  });
+
   it("deve atualizar uma tarefa existente (PATCH)", async () => {
     const { getServerSession } = await import("next-auth");
     const { PATCH } = await import("@/app/api/tasks/[id]/route");
@@ -75,7 +101,7 @@ describe("Integration Tests: Tasks [ID] API", () => {
 
     (getServerSession as any).mockResolvedValue({ user: { id: "user_A" } });
     
-    // Simula que a busca filtrada por ID e UserID não encontrou nada
+    // Essa é para simular que a busca filtrada por ID e UserID não encontrou nada
     (prisma.task.findUnique as any).mockResolvedValue(null);
 
     const req = new Request("http://localhost/api/tasks/task_456", {
