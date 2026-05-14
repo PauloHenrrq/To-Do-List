@@ -2,34 +2,32 @@
 
 import { useState } from 'react';
 import { Plus, Loader2 } from 'lucide-react';
-import { createTaskAction } from '@/app/actions/task.actions';
 
-export function TaskForm() {
+interface TaskFormProps {
+  onAdd: (title: string, description?: string) => Promise<void>;
+  isPending: boolean;
+}
+
+export function TaskForm({ onAdd, isPending }: TaskFormProps) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim() || loading) return;
+    if (!title.trim() || isPending) return;
 
-    setLoading(true);
+    const currentTitle = title;
+    const currentDescription = description;
+
+    setTitle('');
+    setDescription('');
+
     try {
-      const result = await createTaskAction({ 
-        title, 
-        description: description.trim() || undefined,
-        status: 'Pendente' 
-      });
-      if (result.success) {
-        setTitle('');
-        setDescription('');
-      } else {
-        alert(result.error);
-      }
+      await onAdd(currentTitle, currentDescription);
     } catch (err) {
+      setTitle(currentTitle);
+      setDescription(currentDescription);
       alert('Erro ao criar tarefa');
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -53,10 +51,10 @@ export function TaskForm() {
       </div>
       <button
         type="submit"
-        disabled={loading || !title.trim()}
+        disabled={isPending || !title.trim()}
         className="w-full flex items-center justify-center sm:w-auto px-5 py-3 sm:py-5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-indigo-600/20 cursor-pointer"
       >
-        {loading ? (
+        {isPending ? (
           <Loader2 className="w-5 h-5 animate-spin" />
         ) : (
           <div className="flex items-center gap-2">

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signIn } from 'next-auth/react';
@@ -22,7 +22,8 @@ export default function LoginPage() {
   const [isRegisterMode, setIsRegisterMode] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formErrorMessage, setFormErrorMessage] = useState<string | null>(null);
-  
+  const [isPending, startTransition] = useTransition();
+
   const router = useRouter();
 
   const {
@@ -80,8 +81,9 @@ export default function LoginPage() {
       return;
     }
 
-    router.push('/');
-    router.refresh();
+    startTransition(() => {
+      router.push('/');
+    });
   };
 
   const handleToggleAuthMode = () => {

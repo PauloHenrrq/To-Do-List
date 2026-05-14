@@ -1,40 +1,24 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { Check, Trash2, Edit3, X, Save, Loader2 } from 'lucide-react';
-import { toggleTaskStatusAction, deleteTaskAction, updateTaskAction } from '@/app/actions/task.actions';
+import { updateTaskAction } from '@/app/actions/task.actions';
 import { clsx } from 'clsx';
+import { type Task } from '@/schemas/task.schema';
 
 interface TaskItemProps {
-  task: {
-    id: string;
-    title: string;
-    description?: string | null;
-    status: string;
-  };
+  task: Task;
+  onToggle: () => void;
+  onDelete: () => void;
 }
 
-export function TaskItem({ task }: TaskItemProps) {
+export const TaskItem = memo(function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState(task.title);
   const [newDescription, setNewDescription] = useState(task.description || '');
   const [loading, setLoading] = useState(false);
 
   const isCompleted = task.status === 'Concluída';
-
-  const handleToggle = async () => {
-    setLoading(true);
-    await toggleTaskStatusAction(task.id);
-    setLoading(false);
-  };
-
-  const handleDelete = async () => {
-    if (confirm('Tem certeza que deseja excluir esta tarefa?')) {
-      setLoading(true);
-      await deleteTaskAction(task.id);
-      setLoading(false);
-    }
-  };
 
   const handleUpdate = async () => {
     const hasTitleChanged = newTitle.trim() !== task.title;
@@ -68,14 +52,13 @@ export function TaskItem({ task }: TaskItemProps) {
   return (
     <div 
       onClick={() => {
-        if (!isEditing) handleToggle();
+        if (!isEditing) onToggle();
       }}
       className={clsx(
         "group relative flex items-center gap-3 sm:gap-4 p-4 rounded-2xl border transition-all cursor-pointer",
         isCompleted ? "bg-zinc-900/30 border-zinc-900" : "bg-zinc-900/60 border-zinc-800 hover:border-zinc-700 shadow-sm"
     )}>
       <button
-        disabled={loading}
         className={clsx(
           "shrink-0 mt-1 w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all cursor-pointer",
           isCompleted 
@@ -131,11 +114,12 @@ export function TaskItem({ task }: TaskItemProps) {
               </div>
               <div className="flex items-center gap-1">
                 <button 
+                  disabled={loading}
                   onClick={(e) => {
                     e.stopPropagation();
                     handleUpdate();
                   }} 
-                  className="p-1 text-green-500 hover:text-green-400 cursor-pointer"
+                  className="p-1 text-green-500 hover:text-green-400 cursor-pointer disabled:opacity-50"
                 >
                   <Save className="w-[18px] h-[18px]" />
                 </button>
@@ -188,7 +172,7 @@ export function TaskItem({ task }: TaskItemProps) {
         <button
           onClick={(e) => {
             e.stopPropagation();
-            handleDelete();
+            onDelete();
           }}
           className="p-2 rounded-lg text-zinc-100 hover:text-red-400 hover:bg-red-400/10 transition-all cursor-pointer"
         >
@@ -203,4 +187,5 @@ export function TaskItem({ task }: TaskItemProps) {
       )}
     </div>
   );
-}
+});
+

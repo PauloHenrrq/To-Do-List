@@ -1,5 +1,14 @@
 import { z } from "zod";
 
+export const taskSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  description: z.string().optional().nullable(),
+  status: z.enum(["Pendente", "Concluída"]),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+});
+
 export const createTaskSchema = z.object({
   title: z
     .string()
@@ -27,5 +36,7 @@ export const updateTaskSchema = z.object({
   status: z.string().optional(),
 });
 
+export type Task = z.infer<typeof taskSchema>;
 export type CreateTaskInput = z.infer<typeof createTaskSchema>;
 export type UpdateTaskInput = z.infer<typeof updateTaskSchema>;
+

@@ -2,9 +2,8 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { TaskService } from '@/services/task.service';
-import { TaskForm } from '@/components/TaskForm';
 import { TaskContainer } from '@/components/TaskContainer';
-import { ListTodo, CheckCircle2, Circle } from 'lucide-react';
+import { ListTodo } from 'lucide-react';
 import { LogoutButton } from '@/components/LogoutButton';
 
 export default async function HomePage() {
@@ -48,12 +47,6 @@ export default async function HomePage() {
               ? `Você tem ${tasks.length} tarefas no total, ${completedTasks} já concluídas.`
               : 'Parece que você não tem tarefas ainda. Vamos começar?'}
           </p>
-        </section>
-
-        <section className="p-1 rounded-2xl bg-linear-to-r from-indigo-500/20 via-zinc-800 to-indigo-500/20">
-          <div className="bg-zinc-950 rounded-2xl p-4 sm:p-6">
-             <TaskForm />
-          </div>
         </section>
 
         <TaskContainer initialTasks={tasks} />

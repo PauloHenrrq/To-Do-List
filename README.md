@@ -56,6 +56,7 @@ Para detalhes de implementação, payloads de API e arquitetura, acesse:
 
 Para detalhes técnicos profundos, consulte:
 - [🏗️ **Arquitetura & Decisões**](WORKSPACE.md) — O "porquê" de cada escolha técnica.
+- [📁 **Estrutura de Diretórios**](STRUCTURE.md) — O "como" está organizado o projeto.
 
 ---
 
