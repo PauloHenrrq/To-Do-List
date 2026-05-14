@@ -69,19 +69,14 @@ export default function LoginPage() {
   };
 
   const handleSignIn = async (email: string, password: string) => {
-    const signInResult = await signIn('credentials', {
+    const searchParams = new URLSearchParams(window.location.search);
+    const callbackUrl = searchParams.get('callbackUrl') || '/';
+
+    await signIn('credentials', {
       email,
       password,
-      redirect: false,
+      callbackUrl,
     });
-
-    if (signInResult?.error) {
-      setFormErrorMessage('Credenciais inválidas ou erro na autenticação.');
-      return;
-    }
-
-    router.push('/');
-    router.refresh();
   };
 
   const handleToggleAuthMode = () => {
