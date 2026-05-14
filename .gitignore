@@ -42,4 +42,6 @@ next-env.d.ts
 node_modules
 
 # Others files
-WORKSPACE.md
+RELATORIO_TESTES.md
+task.md
+LOGS.md

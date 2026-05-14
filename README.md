@@ -1,18 +1,33 @@
-# 🚀 ToDoList Premium - Fullstack Solution
+# 📝 To-Do List
 
-Uma aplicação de gerenciamento de tarefas de alta performance, construída para demonstrar o domínio de arquitetura moderna, segurança e UX refinada.
+Uma solução completa de gerenciamento de tarefas, focada em **SOLID**, **Clean Code** e **Performance**. Este repositório serve como um mapa de execução para um desafio técnico.
 
 ---
 
-## ✅ O que entregamos (Features Checklist)
+## 📋 Project Roadmap (Todo List)
 
-- [x] **Autenticação de Ferro** — Login e Registro protegidos via NextAuth + JWT.
-- [x] **Persistência Serverless** — Banco de Dados PostgreSQL (Neon) com Prisma ORM.
-- [x] **CRUD Inteligente** — Título, descrição e status com salvamento automático.
-- [x] **UX de Alta Performance** — Edição inline, atalhos de teclado (`Shift + Enter`) e estados otimistas.
-- [x] **Filtros Dinâmicos** — Organize suas tarefas por status em tempo real.
-- [x] **Design Mobile-First** — Interface premium e 100% responsiva com Tailwind CSS.
-- [x] **Qualidade Garantida** — 100% de cobertura nos testes de integração e unitários via Bun.
+Abaixo estão as especificações do projeto organizadas como uma lista de tarefas pendentes e concluídas.
+
+### 🌐 Backend & Persistência
+- [x] **Persistence Layer** — Implementação de persistência real utilizando **Neon (PostgreSQL)** e **Prisma ORM**.
+- [x] **Endpoint POST** — Criação de tarefas (título, descrição opcional, status).
+- [x] **Endpoint GET (List)** — Listagem de todas as tarefas cadastradas.
+- [x] **Endpoint GET (Detail)** — Busca de uma tarefa específica por ID único.
+- [x] **Endpoint PUT/PATCH** — Atualização flexível de dados e status da tarefa.
+- [x] **Endpoint DELETE** — Remoção permanente de registros.
+
+### 💻 Frontend & UX
+- [x] **Task Board** — Tela principal para listagem dinâmica das tarefas vindas da API.
+- [x] **Creation Suite** — Formulário intuitivo para adição de novas tarefas.
+- [x] **Status Toggle** — Funcionalidade de marcar/desmarcar tarefas com **Optimistic UI**.
+- [x] **Management Actions** — Opções integradas de edição e exclusão de tarefas.
+
+### 🏆 Diferenciais (Quality Assurance)
+- [x] **Data Validation** — Esquemas de validação robustos com **Zod**.
+- [x] **Automated Testing** — Suíte de testes de integração e unitários via **Bun**.
+- [x] **API Documentation** — Guia detalhado de consumo disponível no [API.md](API.md).
+- [x] **Smart Filters** — Filtros avançados para organização por status e data.
+- [x] **Authentication** — Fluxo de segurança completo com **NextAuth.js**.
 
 ---
 
@@ -27,20 +42,27 @@ Uma aplicação de gerenciamento de tarefas de alta performance, construída par
 
 ---
 
+## 📖 Documentação Técnica
+
+Para detalhes de implementação, payloads de API e arquitetura, acesse:
+
+> 🚀 **[Guia da API & Referência Técnica (API.md)](API.md)**
+>
+> 💡 **Dica:** Importe o arquivo [todo-list.postman_collection.json](todo-list.postman_collection.json) no seu Postman para testar os endpoints imediatamente.
+
+---
+
 ## 📖 Documentação Adicional
 
-Para detalhes técnicos profundos, consulte nossos guias especializados:
-
-- [🔌 **Documentação da API**](API.md) — Endpoints, payloads e códigos de erro.
+Para detalhes técnicos profundos, consulte:
 - [🏗️ **Arquitetura & Decisões**](WORKSPACE.md) — O "porquê" de cada escolha técnica.
-- [📊 **Relatório de Testes**](RELATORIO_TESTES.md) — Resultados da última suíte de testes.
-- [🛤️ **Roadmap de Execução**](task.md) — Histórico de tarefas concluídas.
 
 ---
 
 ## 🚀 Como Rodar o Projeto
 
 1. **Clonar e Instalar:**
+
    ```bash
    git clone https://github.com/PauloHenrrq/To-Do-List.git
    cd To-Do-List
@@ -49,6 +71,7 @@ Para detalhes técnicos profundos, consulte nossos guias especializados:
 
 2. **Variáveis de Ambiente:**
    Crie um `.env` com:
+
    ```env
    DATABASE_URL="sua_url_do_neon"
    NEXTAUTH_SECRET="seu_segredo_aleatorio"
@@ -56,6 +79,7 @@ Para detalhes técnicos profundos, consulte nossos guias especializados:
    ```
 
 3. **Banco de Dados:**
+
    ```bash
    bunx prisma generate
    bunx prisma db push
