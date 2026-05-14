@@ -1,5 +1,17 @@
 # 📝 LOGS - ToDoList
 
+## [2026-05-14] - Finalização de Documentação e Governança (GitHub)
+- **Status:** Concluído.
+- **Ações:** Consolidação final da documentação técnica e simulação de governança via GitHub Issues.
+- **Entregas:**
+    - Criação do [API.md](file:///c:/Users/paulo/workspace/projetos/ToDoList/API.md) com documentação completa dos endpoints.
+    - Refatoração do [README.md](file:///c:/Users/paulo/workspace/projetos/ToDoList/README.md) para formato visual de checklist.
+    - Simulação de ambiente de produção no GitHub:
+        - Criação e fechamento das issues #1 a #6 (Fundação, CRUD, UI, Testes).
+        - Criação de issues futuras (#7 e #8) para simular backlog de melhorias.
+    - Ajuste no `tsconfig.json` para garantir build limpo em produção.
+
+
 ## [2026-05-13] - Implementação de Filtros de Tarefas (UI/UX)
 - **Status:** Concluído.
 - **Ações:** Criação de componentes para filtragem dinâmica de tarefas.

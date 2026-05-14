@@ -31,11 +31,12 @@ Criar um ToDoList de alta performance, pronto para produção, utilizando a stac
 - [x] Configurar Layout base (Navbar responsiva com Perfil e Logout).
 - [x] Implementar Dashboard de Tasks com Filtros e UX de Edição (Shift+Enter).
 
-### 🧪 Qualidade e Documentação
+### 🧪 Qualidade, Documentação & Governança
 - [x] Estruturar Workspace e Logs de decisão.
-- [x] Configurar ambiente de testes no Bun.
-- [x] Escrever testes de integração para as rotas de API (Tasks).
-- [x] Criar Documentação da API (`API.md`).
+- [x] Configurar ambiente de testes no Bun e validar cobertura (17/17 tests).
+- [x] Criar Documentação da API (`API.md`) e Guia do Projeto (`README.md`).
+- [x] Simular governança via **GitHub Issues** (Issues #1 a #6 fechadas).
+- [x] Preparar Backlog futuro (Backlog Issues #7 e #8 criadas).
 
 ---
-**Status Atual:** Projeto finalizado e estabilizado. Pronto para o deploy final na Vercel.
+**Status Atual:** 🚀 **Projeto Finalizado.** Ambiente de desenvolvimento e repositório GitHub sincronizados e prontos para deploy.

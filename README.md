@@ -1,36 +1,71 @@
-# 📝 ToDoList Premium - Fullstack
+# 🚀 ToDoList Premium - Fullstack Solution
 
-Uma aplicação de gerenciamento de tarefas moderna, segura e de alta performance, construída com o ecossistema Next.js.
+Uma aplicação de gerenciamento de tarefas de alta performance, construída para demonstrar o domínio de arquitetura moderna, segurança e UX refinada.
 
-## 🚀 Tecnologias
-- **Next.js 15+** (App Router)
-- **Prisma & Neon** (PostgreSQL Serverless)
-- **NextAuth.js** (Segurança e JWT)
-- **Tailwind CSS** (UI Moderna)
-- **Bun** (Runtime e Testes)
+---
 
-## 🏗️ Arquitetura
-A aplicação segue o padrão de **Monólito Moderno**, onde o backend (API Routes e Server Actions) e o frontend coexistem, compartilhando validações via **Zod**. A autenticação é protegida por um **Middleware Gatekeeper**, garantindo que dados sensíveis nunca sejam expostos a usuários não autenticados.
+## ✅ O que entregamos (Features Checklist)
 
-## 🛠️ Como Iniciar
-1. Instale as dependências:
+- [x] **Autenticação de Ferro** — Login e Registro protegidos via NextAuth + JWT.
+- [x] **Persistência Serverless** — Banco de Dados PostgreSQL (Neon) com Prisma ORM.
+- [x] **CRUD Inteligente** — Título, descrição e status com salvamento automático.
+- [x] **UX de Alta Performance** — Edição inline, atalhos de teclado (`Shift + Enter`) e estados otimistas.
+- [x] **Filtros Dinâmicos** — Organize suas tarefas por status em tempo real.
+- [x] **Design Mobile-First** — Interface premium e 100% responsiva com Tailwind CSS.
+- [x] **Qualidade Garantida** — 100% de cobertura nos testes de integração e unitários via Bun.
+
+---
+
+## 🛠️ Stack Tecnológica
+
+- **Core:** Next.js (App Router) + TypeScript
+- **Database:** PostgreSQL (Neon) + Prisma
+- **Auth:** NextAuth.js (Credentials & JWT)
+- **UI:** Tailwind CSS + Lucide React
+- **Validation:** Zod (Single Source of Truth)
+- **Runtime/Tests:** Bun
+
+---
+
+## 📖 Documentação Adicional
+
+Para detalhes técnicos profundos, consulte nossos guias especializados:
+
+- [🔌 **Documentação da API**](API.md) — Endpoints, payloads e códigos de erro.
+- [🏗️ **Arquitetura & Decisões**](WORKSPACE.md) — O "porquê" de cada escolha técnica.
+- [📊 **Relatório de Testes**](RELATORIO_TESTES.md) — Resultados da última suíte de testes.
+- [🛤️ **Roadmap de Execução**](task.md) — Histórico de tarefas concluídas.
+
+---
+
+## 🚀 Como Rodar o Projeto
+
+1. **Clonar e Instalar:**
    ```bash
+   git clone https://github.com/PauloHenrrq/To-Do-List.git
+   cd To-Do-List
    bun install
    ```
-2. Configure o arquivo `.env` com sua `DATABASE_URL` do Neon.
-3. Gere o cliente do Prisma:
+
+2. **Variáveis de Ambiente:**
+   Crie um `.env` com:
+   ```env
+   DATABASE_URL="sua_url_do_neon"
+   NEXTAUTH_SECRET="seu_segredo_aleatorio"
+   NEXTAUTH_URL="http://localhost:3000"
+   ```
+
+3. **Banco de Dados:**
    ```bash
    bunx prisma generate
+   bunx prisma db push
    ```
-4. Inicie o servidor de desenvolvimento:
+
+4. **Decolar:**
    ```bash
    bun dev
    ```
 
-## 📍 Guia de Navegação (True North)
-- **Tarefas Pendentes:** [task.md](file:///c:/Users/paulo/workspace/projetos/ToDoList/task.md)
-- **Diagramas e Fluxos:** [ARCH.md](file:///c:/Users/paulo/workspace/projetos/ToDoList/ARCH.md)
-- **Configurações Globais:** [WORKSPACE.md](file:///c:/Users/paulo/workspace/projetos/ToDoList/WORKSPACE.md)
-
 ---
-Desenvolvido com foco em **SOLID** e **Clean Code**.
+
+Desenvolvido por **Paulo Henrique** — Foco em **SOLID**, **Clean Code** e **Performance**.
