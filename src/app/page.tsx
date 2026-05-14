@@ -15,7 +15,7 @@ export default async function HomePage() {
   }
 
   const tasks = await TaskService.findAllByUserId(session.user.id);
-  const completedTasks = tasks.filter(t => t.status === 'Concluída').length;
+  const completedTasks = tasks.filter((t: { status: string }) => t.status === 'Concluída').length;
 
   return (
     <div className="flex-1 flex flex-col bg-zinc-950 min-h-screen">
