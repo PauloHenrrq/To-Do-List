@@ -1,6 +1,5 @@
 import { describe, it, expect, mock } from "bun:test";
 
-// Mocks devem vir antes de qualquer importação de módulos que os utilizem
 mock.module("@prisma/client", () => ({
   PrismaClient: class {
     constructor() {
@@ -28,14 +27,14 @@ const mockPrisma = {
 };
 
 mock.module("@/lib/prisma", () => ({
-  prisma: mockPrisma,
+  default: mockPrisma,
 }));
 
 describe("Integration Tests: Tasks API", () => {
   it("deve retornar lista de tarefas quando autenticado", async () => {
     const { getServerSession } = await import("next-auth");
     const { GET } = await import("@/app/api/tasks/route");
-    const { prisma } = await import("@/lib/prisma");
+    const { default: prisma } = await import("@/lib/prisma");
 
     (getServerSession as any).mockResolvedValue({ user: { id: "user_123" } });
     (prisma.task.findMany as any).mockResolvedValue([{ id: "1", title: "Task Teste" }]);
@@ -51,7 +50,7 @@ describe("Integration Tests: Tasks API", () => {
   it("deve criar uma nova tarefa com dados válidos", async () => {
     const { getServerSession } = await import("next-auth");
     const { POST } = await import("@/app/api/tasks/route");
-    const { prisma } = await import("@/lib/prisma");
+    const { default: prisma } = await import("@/lib/prisma");
 
     (getServerSession as any).mockResolvedValue({ user: { id: "user_123" } });
     (prisma.task.create as any).mockImplementation((args: any) => 
@@ -88,7 +87,7 @@ describe("Integration Tests: Tasks API", () => {
   it("deve retornar 200 se o usuário não possuir tarefas (lista vazia)", async () => {
     const { getServerSession } = await import("next-auth");
     const { GET } = await import("@/app/api/tasks/route");
-    const { prisma } = await import("@/lib/prisma");
+    const { default: prisma } = await import("@/lib/prisma");
 
     (getServerSession as any).mockResolvedValue({ user: { id: "user_empty" } });
     (prisma.task.findMany as any).mockResolvedValue([]); // Simula lista vazia
@@ -104,11 +103,10 @@ describe("Integration Tests: Tasks API", () => {
   it("deve filtrar tarefas por status via query params", async () => {
     const { getServerSession } = await import("next-auth");
     const { GET } = await import("@/app/api/tasks/route");
-    const { prisma } = await import("@/lib/prisma");
+    const { default: prisma } = await import("@/lib/prisma");
 
     (getServerSession as any).mockResolvedValue({ user: { id: "user_123" } });
     
-    // Mock do findMany para ser chamado com o filtro correto
     (prisma.task.findMany as any).mockResolvedValue([{ id: "1", title: "Task Concluída", status: "Concluído" }]);
 
     const req = new Request("http://localhost/api/tasks?status=Concluído");

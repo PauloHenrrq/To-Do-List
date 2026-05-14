@@ -1,6 +1,5 @@
 import { describe, it, expect, mock } from "bun:test";
 
-// Mocks locais para garantir isolamento total
 mock.module("@prisma/client", () => ({
   PrismaClient: class {
     constructor() {
@@ -28,14 +27,14 @@ const mockPrisma = {
 };
 
 mock.module("@/lib/prisma", () => ({
-  prisma: mockPrisma,
+  default: mockPrisma,
 }));
 
 describe("Integration Tests: Tasks [ID] API", () => {
   it("deve buscar uma tarefa específica por ID (GET)", async () => {
     const { getServerSession } = await import("next-auth");
     const { GET } = await import("@/app/api/tasks/[id]/route");
-    const { prisma } = await import("@/lib/prisma");
+    const { default: prisma } = await import("@/lib/prisma");
 
     const mockUserId = "user_123";
     const mockTaskId = "task_456";
@@ -61,14 +60,13 @@ describe("Integration Tests: Tasks [ID] API", () => {
   it("deve atualizar uma tarefa existente (PATCH)", async () => {
     const { getServerSession } = await import("next-auth");
     const { PATCH } = await import("@/app/api/tasks/[id]/route");
-    const { prisma } = await import("@/lib/prisma");
+    const { default: prisma } = await import("@/lib/prisma");
 
     const mockUserId = "user_123";
     const mockTaskId = "task_456";
 
     (getServerSession as any).mockResolvedValue({ user: { id: mockUserId } });
     
-    // Simular que a tarefa pertence ao usuário
     (prisma.task.findUnique as any).mockResolvedValue({
       id: mockTaskId,
       userId: mockUserId,
@@ -97,11 +95,10 @@ describe("Integration Tests: Tasks [ID] API", () => {
   it("deve retornar 404 ao tentar atualizar tarefa de outro usuário", async () => {
     const { getServerSession } = await import("next-auth");
     const { PATCH } = await import("@/app/api/tasks/[id]/route");
-    const { prisma } = await import("@/lib/prisma");
+    const { default: prisma } = await import("@/lib/prisma");
 
     (getServerSession as any).mockResolvedValue({ user: { id: "user_A" } });
     
-    // Essa é para simular que a busca filtrada por ID e UserID não encontrou nada
     (prisma.task.findUnique as any).mockResolvedValue(null);
 
     const req = new Request("http://localhost/api/tasks/task_456", {
@@ -116,7 +113,7 @@ describe("Integration Tests: Tasks [ID] API", () => {
   it("deve deletar uma tarefa existente (DELETE)", async () => {
     const { getServerSession } = await import("next-auth");
     const { DELETE } = await import("@/app/api/tasks/[id]/route");
-    const { prisma } = await import("@/lib/prisma");
+    const { default: prisma } = await import("@/lib/prisma");
 
     const mockUserId = "user_123";
     const mockTaskId = "task_789";

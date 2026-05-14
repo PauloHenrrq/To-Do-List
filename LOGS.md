@@ -1,15 +1,32 @@
 # 📝 LOGS - ToDoList
 
+## [2026-05-13] - Implementação de Filtros de Tarefas (UI/UX)
+- **Status:** Concluído.
+- **Ações:** Criação de componentes para filtragem dinâmica de tarefas.
+- **Entregas:**
+    - Componente `TaskFilter` com botões e contadores automáticos.
+    - Componente `TaskContainer` para gerenciamento de estado de filtro no cliente.
+    - Integração na `page.tsx` posicionando filtros abaixo de "Suas Tarefas".
+    - Estilização premium com efeitos de glassmorphism e animações sutis.
+
 ## [2026-05-13] - Conclusão do Backend e Readiness para Frontend
 - **Status:** 100% Concluído.
-- **Ações:** Implementação de endpoints finais, filtros e validação estrita.
+- **Ações:** Implementação de endpoints finais, filtros, validação estrita e correção de mocks de teste.
 - **Entregas:**
     - GET `/api/tasks/[id]` para busca específica por ID.
     - Filtros por `status` implementados no GET de listagem.
     - Validação estrita de `status` obrigatório no POST.
+    - Correção de `SyntaxError` nos testes de integração (ajuste de named import para default import no mock do Prisma).
     - Suíte de testes expandida e validada (17/17 tests pass).
 - **Próximos Passos:** Inicialização do Frontend (Issue #5).
-
+## [2026-05-13] - Refatoração e Unificação de Schemas (SOLID/KISS)
+- **Status:** Concluído.
+- **Ações:** Centralização total da lógica de validação.
+- **Entregas:**
+    - `AuthService` e `TaskService` refatorados para consumir schemas de `src/schemas`.
+    - Remoção de schemas locais redundantes nos serviços.
+    - Aplicação de princípios SOLID (SRP) e KISS para simplificação do código.
+    - Suíte de testes validada e 100% verde após refatoração.
 
 ## [2026-05-12] - Sincronização de Schema e Refinamento de Status
 - **Status:** Concluído.

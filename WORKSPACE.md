@@ -3,14 +3,14 @@
 ## 📖 Visão Geral
 Este projeto é um desafio técnico de um ToDoList de alta performance, focado em demonstrar o domínio da stack Next.js moderna com App Router e Server Actions.
 
-## 🛠️ Stack Tecnológica
-- **Framework:** Next.js 15+ (App Router)
-- **Runtime & Tests:** Bun
+## 🛠️ Stack Tecnológica (Mirrored Stack)
+- **Framework:** Next.js 16.2.6 (Experimental/Canary)
+- **Runtime & Tests:** Bun 1.x / Vitest
 - **Banco de Dados:** PostgreSQL (Neon.tech)
-- **ORM:** Prisma
-- **Autenticação:** NextAuth.js (Auth.js)
-- **Estilização:** TailwindCSS
-- **Validação:** Zod
+- **ORM:** Prisma 7.8.0 (TCP Direct Connection + ESM)
+- **Autenticação:** NextAuth.js 4.24.14
+- **Estilização:** TailwindCSS 4.0 (Beta)
+- **Validação:** Zod 4.4.3
 
 ## 🏗️ Arquitetura e Padrões
 - **Monólito Funcional:** Frontend e Backend unificados no Next.js.
@@ -18,6 +18,7 @@ Este projeto é um desafio técnico de um ToDoList de alta performance, focado e
 - **JWT Strategy:** Sessões sem estado (stateless) para máxima performance e escalabilidade.
 - **Module Augmentation:** Sessão do NextAuth estendida para incluir `id` do usuário nativamente.
 - **Strict TS:** Nível 3 de rigor no TypeScript.
+- **ESM Native:** Uso de `"type": "module"` no package.json.
 
 ## 📍 True North (Onde começar)
 1. O fluxo de desenvolvimento detalhado está em [task.md](file:///c:/Users/paulo/workspace/projetos/ToDoList/task.md).
@@ -31,11 +32,14 @@ Este projeto é um desafio técnico de um ToDoList de alta performance, focado e
 - **2024-05-12 - Bcryptjs:** Escolha do `bcryptjs` em vez do `bcrypt` nativo para evitar problemas de compilação em ambientes serverless (Vercel/Neon).
 - **2024-05-12 - JWT Strategy:** Optamos por JWT para evitar consultas constantes ao banco de dados apenas para validar sessões, melhorando a latência.
 - **2024-05-12 - Prisma Singleton:** Implementação de padrão Singleton para o Prisma Client para evitar o erro "Too many clients" durante o Hot Reload em desenvolvimento.
-- **2024-05-12 - Status String:** Alteração do campo `completed` (boolean) para `status` (string) para permitir maior flexibilidade nos estados da tarefa (ex: Pendente, Concluído) conforme requisitos do desafio.
+- **2024-05-13 - Estabilização de Infra:** Downgrade crítico de Next.js 16/Prisma 7 para versões estáveis (N15/P6) devido a instabilidades de motor no Windows.
+- **2024-05-13 - TCP Direct Connection:** Migração do Neon Driver Adapter para conexão TCP direta para garantir persistência sem crashes de WebSocket.
+- **2024-05-13 - Mirrored Stack (Vanguard):** Decisão de retornar ao Next.js 16 e Prisma 7, espelhando a configuração funcional do projeto `/projetos/todo-list` e habilitando `"type": "module"`.
 
 ## Progress Log
 <!-- LOG_START -->
 - **2026-05-12:** Conclusão da Issue #3 (CRUD). Endpoints de tarefas implementados com isolamento de usuário e schemas modulares.
 - **2026-05-12:** Conclusão da Issue #1 (Auth). NextAuth + JWT + Prisma integrados.
 - **2026-05-12:** Conclusão da Issue #2 (Security). Middleware configurado para proteção global de rotas e redirecionamento para login.
+- **2026-05-13:** Refatoração da `LoginPage` (SOLID/KISS). Implementação de Kit UI (`Input`, `Button`) e padronização de nomenclatura explícita.
 <!-- LOG_END -->

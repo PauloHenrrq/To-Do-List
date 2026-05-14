@@ -3,7 +3,7 @@ import { z } from "zod";
 export const createTaskSchema = z.object({
   title: z
     .string()
-    .min(1, "O título não pode ser vazio.")
+    .min(2, "O título não pode ser vazio.")
     .max(100, "O título deve ter no máximo 100 caracteres."),
   description: z
     .string()

@@ -26,20 +26,16 @@ Criar um ToDoList de alta performance, pronto para produção, utilizando a stac
   - [x] `DELETE`: Remover tarefa.
 
 ### 3. 🎨 Frontend & Interface (UI Premium)
-- [ ] Criar Página de Login (`/login`) com Toggle para Cadastro.
-- [ ] Implementar Server Actions para registro de novos usuários.
-- [ ] Configurar Layout base (Navbar responsiva com Perfil e Logout).
-- [ ] Implementar Dashboard de Tasks com Filtros e Optimistic Updates.
+- [x] Criar Página de Login (`/login`) com suporte a Registro.
+- [x] Implementar Server Actions para registro de novos usuários.
+- [x] Configurar Layout base (Navbar responsiva com Perfil e Logout).
+- [x] Implementar Dashboard de Tasks com Filtros e UX de Edição (Shift+Enter).
 
 ### 🧪 Qualidade e Documentação
 - [x] Estruturar Workspace e Logs de decisão.
 - [x] Configurar ambiente de testes no Bun.
-- [x] Escrever testes unitários para a lógica de negócio (Zod Schemas).
 - [x] Escrever testes de integração para as rotas de API (Tasks).
-    - [x] GET /api/tasks (Listagem)
-    - [x] POST /api/tasks (Criação)
-    - [x] PATCH /api/tasks/[id] (Atualização)
-    - [x] DELETE /api/tasks/[id] (Remoção)
+- [x] Criar Documentação da API (`API.md`).
 
 ---
-**Status Atual:** Backend completo (Auth + CRUD). Iniciando fase de Testes Automatizados com Bun.
+**Status Atual:** Projeto finalizado e estabilizado. Pronto para o deploy final na Vercel.
