@@ -72,19 +72,32 @@ export default function LoginPage() {
     const searchParams = new URLSearchParams(window.location.search);
     const callbackUrl = searchParams.get('callbackUrl') || '/';
 
-    const result = await signIn('credentials', {
-      email,
-      password,
-      redirect: false,
-    });
+    try {
+      const result = await signIn('credentials', {
+        email,
+        password,
+        redirect: false,
+      });
 
-    if (result?.error) {
-      setFormErrorMessage('E-mail ou senha incorretos.');
-      return;
+      if (result?.error) {
+        setFormErrorMessage(
+          result.error === 'CredentialsSignin'
+            ? 'E-mail ou senha incorretos.'
+            : `Erro técnico: ${result.error}`
+        );
+        return;
+      }
+
+      if (result?.ok) {
+        router.push(callbackUrl);
+        // Small delay to ensure the browser has persisted the session cookie
+        setTimeout(() => {
+          router.refresh();
+        }, 500);
+      }
+    } catch (error) {
+      setFormErrorMessage('Falha na comunicação com o serviço de autenticação.');
     }
-
-    // Hard redirect to ensure session cookies are processed correctly
-    window.location.href = callbackUrl;
   };
 
   const handleToggleAuthMode = () => {
