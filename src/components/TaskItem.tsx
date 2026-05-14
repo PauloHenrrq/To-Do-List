@@ -75,7 +75,6 @@ export function TaskItem({ task }: TaskItemProps) {
         isCompleted ? "bg-zinc-900/30 border-zinc-900" : "bg-zinc-900/60 border-zinc-800 hover:border-zinc-700 shadow-sm"
     )}>
       <button
-        onClick={handleToggle}
         disabled={loading}
         className={clsx(
           "shrink-0 mt-1 w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all cursor-pointer",
