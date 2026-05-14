@@ -72,11 +72,19 @@ export default function LoginPage() {
     const searchParams = new URLSearchParams(window.location.search);
     const callbackUrl = searchParams.get('callbackUrl') || '/';
 
-    await signIn('credentials', {
+    const result = await signIn('credentials', {
       email,
       password,
-      callbackUrl,
+      redirect: false,
     });
+
+    if (result?.error) {
+      setFormErrorMessage('E-mail ou senha incorretos.');
+      return;
+    }
+
+    // Hard redirect to ensure session cookies are processed correctly
+    window.location.href = callbackUrl;
   };
 
   const handleToggleAuthMode = () => {
